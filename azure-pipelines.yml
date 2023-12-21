@@ -34,9 +34,7 @@ stages:
         testResultsFiles: '**/surefire-reports/TEST-*.xml'
         javaHomeOption: 'Path'
         jdkDirectory: 'C:\Users\MAiKAZE\Downloads\vsts-agent-win-x64-3.232.1\jdk\21\JAVA_HOME_21_X64_zulu21.30.15-ca-jdk21.0.1-win_x64_zip\zulu21.30.15-ca-jdk21.0.1-win_x64\bin'
-        mavenVersionOption: 'Path'
-        mavenDirectory: '$(Build.SourcesDirectory)'
-        mavenSetM2Home: false
+        mavenVersionOption: 'Default'
         mavenOptions: '-Xmx3072m'
         mavenAuthenticateFeed: false
         effectivePomSkip: false
