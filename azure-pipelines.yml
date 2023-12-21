@@ -1,0 +1,40 @@
+# Maven
+# Build your Java project and run tests with Apache Maven.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/java
+
+trigger:
+- master
+
+pool:
+  name: MyPool
+
+stages:
+- stage: build
+  jobs:
+  - job: 
+    displayName: "Environment set up"
+    steps:
+    - task: JavaToolInstaller@0
+      inputs:
+        versionSpec: '21'
+        jdkArchitectureOption: 'x64'
+        jdkSourceOption: 'LocalDirectory'
+        jdkFile: 'C:\Users\MAiKAZE\Downloads\vsts-agent-win-x64-3.232.1\jdk\zulu21.30.15-ca-jdk21.0.1-win_x64.zip'
+        jdkDestinationDirectory: 'C:\Users\MAiKAZE\Downloads\vsts-agent-win-x64-3.232.1\jdk\21'
+        cleanDestinationDirectory: true
+  - job: 
+    displayName: "Maven Build"
+    steps:
+    - task: Maven@3
+      inputs:
+        mavenPomFile: 'pom.xml'
+        publishJUnitResults: true
+        testResultsFiles: '**/surefire-reports/TEST-*.xml'
+        javaHomeOption: 'Path'
+        jdkDirectory: 'C:\Users\MAiKAZE\Downloads\vsts-agent-win-x64-3.232.1\jdk\21\zulu21.30.15-ca-jdk21.0.1-win_x64\bin'
+        mavenVersionOption: 'Default'
+        mavenOptions: '-Xmx3072m'
+        mavenAuthenticateFeed: false
+        effectivePomSkip: false
+        sonarQubeRunAnalysis: false
