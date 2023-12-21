@@ -28,6 +28,7 @@ stages:
     dependsOn: setup
     steps:
     - task: PowerShell@2
+      displayName: "Add DB url and password to application.yml"
       inputs:
         targetType: 'inline'
         script: |
@@ -35,6 +36,7 @@ stages:
           (Get-Content $file) -replace '    url:', '    url: $(URL)' | Set-Content $file
           (Get-Content $file) -replace '    password:', '    password: $(PWD)' | Set-Content $file
     - task: Maven@3
+      displayName: "Maven build JAR"
       inputs:
         mavenPomFile: 'pom.xml'
         publishJUnitResults: true
@@ -46,3 +48,8 @@ stages:
         mavenAuthenticateFeed: false
         effectivePomSkip: false
         sonarQubeRunAnalysis: false
+    - task: CopyFiles@2
+      inputs:
+        SourceFolder: '$(Build.SourcesDirectory)\target'
+        Contents: 'aws-restapi-proj-0.0.1-SNAPSHOT.jar'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'
