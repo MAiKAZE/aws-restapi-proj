@@ -32,8 +32,8 @@ stages:
         targetType: 'inline'
         script: |
           $file = '$(Build.SourcesDirectory)\src\main\resources\application.yml'
-          (Get-Content $file) -replace '    url:', '    url: ${env:URL}' | Set-Content $file
-          (Get-Content $file) -replace '    password:', '    password: ${env:PWD}' | Set-Content $file
+          (Get-Content $file) -replace '    url:', '    url: $(URL)' | Set-Content $file
+          (Get-Content $file) -replace '    password:', '    password: $(PWD)' | Set-Content $file
     - task: Maven@3
       inputs:
         mavenPomFile: 'pom.xml'
