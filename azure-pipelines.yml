@@ -12,7 +12,7 @@ pool:
 stages:
 - stage: build
   jobs:
-  - job: 
+  - job: setup
     displayName: "Environment set up"
     steps:
     - task: JavaToolInstaller@0
@@ -23,8 +23,9 @@ stages:
         jdkFile: 'C:\Users\MAiKAZE\Downloads\vsts-agent-win-x64-3.232.1\jdk\zulu21.30.15-ca-jdk21.0.1-win_x64.zip'
         jdkDestinationDirectory: 'C:\Users\MAiKAZE\Downloads\vsts-agent-win-x64-3.232.1\jdk\21'
         cleanDestinationDirectory: true
-  - job: 
+  - job: build
     displayName: "Maven Build"
+    dependsOn: setup
     steps:
     - task: Maven@3
       inputs:
